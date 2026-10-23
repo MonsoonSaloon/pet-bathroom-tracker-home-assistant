@@ -1,0 +1,26 @@
+name: "Pet Bathroom Tracker (Preview)"
+slug: pet_bathroom_tracker
+version: "0.5.1"
+description: "Shared bathroom tracking for pets, with a daily timeline."
+arch:
+  - amd64
+  - aarch64
+startup: application
+init: true
+stage: experimental
+ingress: true
+ingress_port: 8099
+# Supervisor checks both the web service and basic database access when Watchdog is enabled.
+watchdog: "http://[HOST]:[PORT:8099]/health"
+panel_title: Pet Bathroom Tracker
+panel_icon: mdi:paw
+panel_admin: false
+backup: cold
+options:
+  timezone: "America/New_York"
+schema:
+  timezone: str
+  # Deprecated preview options retained as optional so upgrades from
+  # 0.3.x accept existing /data/options.json without resetting any pets.
+  dog_1_name: str?
+  dog_2_name: str?
