@@ -1,44 +1,58 @@
-# Pet Bathroom Tracker — Home Assistant app documentation
+# Pet Bathroom Tracker — Documentation
 
-## Getting started
+This is a free community **Home Assistant OS app**. It uses Home Assistant Ingress to provide access without a separate username/password or exposed LAN port.
 
-Install on Home Assistant OS, choose an IANA timezone in the Configuration tab (for example `America/New_York`), then start the app. Click **Open Web UI** and choose **Add your first pet**. Pet icons and names can be edited later under **Manage pets**.
+## Install from GitHub (recommended)
 
-Enable **Show in sidebar** so other non-admin members of the household can open the tracker through Home Assistant, without a second login.
+1. Open **Settings → Apps → Install app → ⋮ → Repositories** in Home Assistant.
+2. Add **https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-assistant**.
+3. Install **Pet Bathroom Tracker (Preview)** from the new repository section.
+4. Under **Configuration**, select your IANA time zone (for example `America/New_York`).
+5. Start the app. Click **Open Web UI** and then **Add your first pet**.
+6. Turn on **Show in sidebar** to give all permitted Home Assistant users convenient access. A non-admin user can open the sidebar app but cannot administer its installation.
+7. After confirming it works, turn on **Start on boot**; optionally enable **Watchdog** for availability monitoring.
 
-## Recording trips
+This is an **app**, not a HACS integration. The GitHub version will build a container on Home Assistant during installation; a ready-made multi-architecture image is not yet provided. ARM64 has not yet been runtime-tested.
 
-Select Pee, Poop, or both; adjust the timestamp if necessary; add optional notes; and save. New-entry timestamps refresh automatically until changed manually. The day selector, totals, and hourly tiles show history. Tap a tile or listed entry to edit or delete it. On narrow screens, use the pet selector above the timeline; on wide screens multiple pet columns are visible.
+## Record and review bathroom trips
 
-Manage pets allows adding, renaming, changing icons, archiving, and restoring pets. Archiving hides the pet from active forms and timeline columns **without deleting trips**. Every Home Assistant user who can open the tracker sees and can change the same data.
+Select **Pee**, **Poop**, or both; leave the current time or set another time; add optional notes; and save. Daily totals and the color-coded hourly timeline update. Tap a trip tile to edit or delete it. Use the date selector to browse previous days.
 
-## Upgrading between preview releases
+Use **Manage pets** to add more pets, rename them, pick icons, or archive and restore them. Archiving hides a pet's active form and timeline column **without deleting history**. On phones, select one pet for the hourly timeline; on desktops, multiple pet columns appear.
 
-1. In **Settings → System → Backups**, make a manual backup that includes this preview app. Keep your backup encryption recovery key secure.
-2. Start Samba temporarily and copy the updated **app folder contents** into the existing `local_apps` preview folder without creating a nested directory or uninstalling.
-3. In **Settings → Apps → Install app**, select **Check for updates**, then update to the new version.
-4. Verify the logs say `Pet Bathroom Tracker database ready` and Gunicorn is listening on port 8099.
-5. Open the app and verify saved pet names, icons, archives, and trips. Optionally enable **Watchdog** from the app Info page; its `/health` endpoint checks whether the database tables are readable.
+All authenticated Home Assistant users who can open the app share the **same pets and history**. They can all edit/delete entries; there is no per-user or pet-level permission model.
 
-### Why database backups are cold
+## Update the GitHub-installed app
 
-The app manifest specifies `backup: cold`: Supervisor stops the app while copying `/data` and starts it afterward. This was already present in v0.4.0. Individual-app backups include the private SQLite data; keep an accessible copy of the local-app source ZIP or published repository as well.
+1. Create a manual backup via **Settings → System → Backups**, selecting **Pet Bathroom Tracker (Preview)** in the backup contents. Keep the backup encryption emergency kit secure.
+2. In **Settings → Apps → Install app**, select **⋮ → Check for updates** if Home Assistant hasn't recognized the new version.
+3. Open the app's update dialog, read the changelog, and choose **Update**. **Do not uninstall** the existing app.
+4. Confirm the app starts and the previous pets, icons, and bathroom history remain. The Logs tab should include `Pet Bathroom Tracker database ready`.
+5. If you enable Watchdog, it will check the `/health` endpoint. It will not replace regular backups.
 
-An encrypted Home Assistant backup is **not** a standalone SQLite file. Don't upload it to a public issue tracker or attempt to apply the offline recovery tool directly to the encrypted archive. See [RECOVERY.md](../RECOVERY.md).
+### Older Local-app previews
+
+Local-app previews installed from `/local_apps` have a different Home Assistant app identity than this GitHub repository app. **Installing the GitHub version does not automatically migrate records from a Local app.** Keep the old app and its backup until you have explicitly tested a migration; don't assume the two apps share `/data`.
+
+## Backups and recovery
+
+The app stores records in private SQLite storage at `/data/tracker.db`. The configuration declares `backup: cold`, which stops the app briefly during a Home Assistant app-data backup to reduce SQLite write-consistency risk.
+
+The project successfully restored an encrypted app backup to a separate Home Assistant OS VM on October 23, 2026 and confirmed edits survived restart. This does not guarantee every hardware version or backup environment will behave identically.
+
+A Home Assistant encrypted backup `.tar` file is **not** a raw SQLite database. Do not share backup files or your encryption recovery key publicly. Detailed restoration instructions: https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-assistant/blob/main/RECOVERY.md
 
 ## Troubleshooting
 
-- **Not visible in Local apps:** Ensure the local folder contains `config.yaml` and use Check for updates.
-- **Cannot start:** Inspect the app logs for SQLite integrity errors, unsupported timezone names, or package build issues.
-- **Watchdog restarts app:** Check logs for health check failures. Disable Watchdog while intentionally stopping or troubleshooting the app.
-- **403 Forbidden:** Open the sidebar/Ingress URL, not a direct container address. Only the Supervisor's Ingress IP `172.30.32.2` is accepted.
-- **Wrong times:** Set timezone to your local IANA name and restart; stored timestamps use local wall-clock values and require cross-timezone caution.
-- **Missing pets after update:** Stop and inspect backup contents before attempting a restore. Do not uninstall or overwrite `/data/tracker.db`.
+- **App is not listed:** Confirm the correct repository URL, refresh the app store, and verify the GitHub repository is reachable.
+- **Install fails:** Read the installation/build logs. This source-built preview needs network access to obtain dependencies.
+- **App won't start:** Inspect the app's **Log** tab for database integrity errors or runtime failures.
+- **Dashboard is forbidden/unreachable:** Use **Open Web UI** or its Home Assistant sidebar entry, not an internal container URL.
+- **Times look wrong:** Check the configured time zone. Timestamps use local wall-clock values; take extra care with historical trips around daylight saving time.
+- **Records missing after update:** Don't uninstall or delete app data. Check your saved app backup before attempting recovery.
 
-## Privacy
+## Security and privacy
 
-All data stays in `/data/tracker.db` under Home Assistant. There is no cloud account, telemetry, public web port, or Home Assistant API permission. This is a **shared household application**, not per-user/private pet tracking.
+No remote accounts, advertising, analytics, or telemetry are built into this app. Home Assistant Ingress authenticates access. Pet records stay in your local Home Assistant storage unless your backups sync them elsewhere. This application has not been independently security-audited. Please report vulnerabilities privately to the repository owner.
 
-## Preview limitations
-
-This version has local unit tests and a disposable SQLite snapshot/restore rehearsal. An encrypted app backup was successfully restored to an isolated Home Assistant OS VM on `amd64` on October 23, 2026; `aarch64` runtime behavior and clean installation from a public repository still need testing. The current app remains a developer preview, not a stable public release.
+More information: https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-assistant/blob/main/SECURITY.md

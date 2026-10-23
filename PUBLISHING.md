@@ -1,32 +1,42 @@
-# Publishing the Pet Bathroom Tracker preview on GitHub
+# Publishing and maintaining Pet Bathroom Tracker
 
-The source package is ready to upload as a **preview**. It is not a verified stable 1.0 release.
+## Repository
 
-## 1. Create your GitHub repository
+Public repository: https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-assistant
 
-1. Log in to GitHub and create a new public repository (suggested name: `pet-bathroom-tracker-home-assistant`).
-2. Give it a description such as "Local-first multi-pet bathroom tracker for Home Assistant OS".
-3. When uploading this package, use the **contents** of the extracted folder as the repository root. In particular, `repository.yaml` must be at the top level and `pet_bathroom_tracker/config.yaml` one directory below.
-4. Confirm that no personal SQLite files, backups, passwords, IP addresses, or local keys are being uploaded. `.gitignore` excludes common SQLite and environment files but is not a substitute for inspecting files.
-5. Add the repository URL and an appropriate maintainer/contact to `repository.yaml` after you know the real URL. No URL has been prefilled because your GitHub username and repository URL are not known.
-6. Commit the files. GitHub will run the CI workflow; check its result under **Actions**. Automated tests alone do not prove every Home Assistant OS architecture works.
+The repository root contains `repository.yaml` and the app directory `pet_bathroom_tracker/` with its `config.yaml`. Home Assistant OS can add the repository from **Settings → Apps → Install app → ⋮ → Repositories** or via the [one-click Add repository link](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FMonsoonSaloon%2Fpet-bathroom-tracker-home-assistant).
 
-## 2. Test as a repository installation
+## Tested so far (October 23, 2026)
 
-In an isolated Home Assistant OS installation, open **Settings → Apps → Install app → ⋮ → Repositories**, add the GitHub URL, find **Pet Bathroom Tracker (Preview)**, and install it. The Dockerfile will be built **on the user's device** because `image:` is intentionally absent for the preview. Check logs, first-pet onboarding, create/edit/delete, persistence and non-admin Ingress access.
+- The GitHub `main` branch was pushed and the **Source checks** workflow completed successfully.
+- The public repository was added to a clean Home Assistant OS VM on AMD64.
+- The app installed, started, displayed a zero-pet welcome screen, accepted a pet and a combined pee/poop trip, and retained those records after an app restart.
+- An earlier encrypted Home Assistant app backup was restored to a disposable second HA OS VM, preserving existing pets, icons, and history; an edit persisted through restart.
 
-**Local-to-GitHub migration note:** A GitHub repo app and a Local app get different Supervisor IDs. Installing the repo app is a new app, not a seamless update of `local_pet_bathroom_tracker`. Don't remove the Local app or its backups until a separate migration/backup-restore plan is tested.
+## Still required before a stable release
 
-## 3. Make installation easier
+1. Build and test on real `aarch64` Home Assistant OS hardware (not just manifest syntax).
+2. Review Python dependency vulnerability advisories and update pins as needed.
+3. Consider pre-built, signed multi-platform container images to avoid on-device builds.
+4. Capture **sanitized** example screenshots without private information.
+5. Test in-place upgrade **v0.5.1 → v0.5.2** on an existing GitHub-installed app; verify data and view the changelog.
+6. Repeat access, edit/delete, error-path, and watchdog checks in the publicly installed app.
+7. Keep `stage: experimental` until the remaining checks and security review are complete.
 
-Once the repository URL is known, add a Home Assistant "My" link to the README. The official [repository documentation](https://contributors.home-assistant.io/apps/guides/repository/) explains the `supervisor_add_addon_repository` link, which opens a pre-filled repository installer.
+## Making changes
 
-## 4. Before a stable release
+1. Modify source in your local clone (outside cloud-sync folders).
+2. Increment `version` in `pet_bathroom_tracker/config.yaml`, and keep the dashboard version label and tests consistent.
+3. Add the new version at the top of **both** `CHANGELOG.md` and `pet_bathroom_tracker/CHANGELOG.md`. Keep the full version history for Home Assistant's update dialog.
+4. Update the app's `README.md` and `DOCS.md` if installation/user-facing behavior changed.
+5. Run local automated tests, commit, and push from GitHub Desktop.
+6. Check **GitHub → Actions → Source checks** for a green run.
+7. On the disposable HA OS instance, use **Check for updates**, update in place, and confirm previous pet/trip records survive.
 
-- Prove an `aarch64` build and a clean GitHub repository installation.
-- Publish **pre-built** container images with the official builder actions instead of building Python from source on every user's device.
-- Review dependency security advisories and update pinned versions where needed.
-- Finish user screenshots, proper logos, versioned release notes, and documentation of upgrades from Local apps.
-- Keep the app in `stage: experimental` until those checks pass.
+For upgrades, do not uninstall. Maintain an independent encrypted Home Assistant backup and encryption emergency kit.
 
-Sources: [Home Assistant repository documentation](https://contributors.home-assistant.io/apps/guides/repository/) and [publishing guidance](https://contributors.home-assistant.io/apps/guides/publishing/).
+## Security hygiene
+
+Review every changed file for keys, personal IPs, user-specific settings, and SQLite databases before pushing. The `.gitignore` covers common file patterns, but is not a security audit. Do not include data snapshots or Home Assistant backup archives in the public repository.
+
+Home Assistant repository documentation: https://contributors.home-assistant.io/apps/guides/repository/

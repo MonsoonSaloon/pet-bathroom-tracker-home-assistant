@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.5.2 — Public installation documentation polish
+
+### Fixed
+- Replaced the outdated v0.4.0 placeholder on the Home Assistant app details page with real installation, usage, backup and support information.
+- Updated the dashboard label to `Preview 0.5.2` so it matches Home Assistant's installed version.
+- Corrected stale development notes that incorrectly said fresh GitHub installation and isolated restore testing were pending.
+
+### Improved
+- Added an official **Add repository** shortcut to the GitHub README and populated the public repository URL in `repository.yaml`.
+- Clarified GitHub-installed upgrades versus older Local-app previews; they do not share the same app identity or automatically transfer records.
+- Updated in-app documentation, release checklist, publishing guide, and troubleshooting information.
+- Added `.gitattributes` to preserve LF line endings for Linux scripts even when developing on Windows.
+
+### Upgrade notes
+- **No tracking behavior, API, database schema, or saved records changed.** Existing pets and bathroom history should stay intact when updating in place.
+- Back up the app before updating. **Do not uninstall it**, since that may delete persistent data.
+- Still an **experimental developer preview**. ARM64 runtime and independent security review remain outstanding.
+
 ## 0.5.1 — GitHub preview preparation
 
 ### Fixed

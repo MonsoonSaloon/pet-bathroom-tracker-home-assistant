@@ -1,61 +1,85 @@
 # Pet Bathroom Tracker — Home Assistant App
 
-![Status: Developer preview](https://img.shields.io/badge/status-developer%20preview-orange) ![Home Assistant OS](https://img.shields.io/badge/platform-Home%20Assistant%20OS-blue)
+![Developer preview](https://img.shields.io/badge/status-experimental-orange) ![Home Assistant OS](https://img.shields.io/badge/platform-Home%20Assistant%20OS-blue)
 
-**Preview v0.5.1** — free, local-first bathroom tracking for pets, right inside Home Assistant. Supports any number of pets, optional notes, pee/poop/both entries, editable history, an hourly timeline, a mobile-friendly pet selector, and shared access through Home Assistant's existing accounts.
+**Preview v0.5.2** — a free, local-first bathroom tracker for multiple pets, shared inside Home Assistant. Record pee, poop, or both; review a color-coded timeline; and edit history from your phone, tablet, or computer.
 
-> **Preview warning:** This release is experimental. It has been tested on one `amd64` Home Assistant OS deployment, with an encrypted app backup restored successfully to a separate Home Assistant OS VM. ARM64 builds, a fresh installation via a public GitHub repository, and third-party security review are still pending. Please keep independent backups.
+[![Add Pet Bathroom Tracker repository to your Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FMonsoonSaloon%2Fpet-bathroom-tracker-home-assistant)
 
-## Installation (Home Assistant OS)
+> **Experimental preview.** Successfully tested on AMD64 Home Assistant OS: fresh install from this public GitHub repository, first-pet onboarding, saving a trip and retaining it after app restart, non-admin household access in an earlier preview, and a separate encrypted app-backup restore. ARM64 has not been runtime-tested; no independent security review has been completed.
 
-This repository is a **Home Assistant app repository**, **not** a HACS integration. It contains `repository.yaml` at the root and `pet_bathroom_tracker/config.yaml` underneath. Home Assistant OS supports adding community repositories from **Settings → Apps → Install app → ⋮ → Repositories**.
+## Features
 
-1. Copy the **HTTPS URL of this GitHub repository** from the GitHub **Code** menu.
-2. In Home Assistant, open **Settings → Apps → Install app → ⋮ → Repositories**, paste the copied URL, and choose **Add**.
-3. Find **Pet Bathroom Tracker (Preview)**, install it, and select your time zone in the app configuration.
-4. Start the app and select **Open Web UI**. Add your first pet from the welcome screen.
-5. Enable **Show in sidebar** to make the app accessible to non-admin household members. If it works reliably, optionally enable **Start on boot** and **Watchdog**.
+- **Any number of pets:** custom names, emoji icons, and archiving without deleting history.
+- **Fast entry:** pee, poop, or both; timestamp and optional notes.
+- **Clear history:** daily totals and editable, color-coded hourly timeline.
+- **Mobile friendly:** one-pet timeline selector on narrow displays; all pets on larger screens.
+- **Shared household data:** authorized Home Assistant users see the same database through Ingress.
+- **Local storage:** private SQLite database, with Home Assistant app backups (`backup: cold`).
 
-The preview has no pre-built registry image configured, so Home Assistant currently **builds the Dockerfile locally during installation**. This can take longer and has not yet been tested on ARM64 hardware. Future stable releases should provide pre-built images. This source-built approach is supported for development. See [Home Assistant's app publishing guidance](https://contributors.home-assistant.io/apps/guides/publishing/).
+## Install in five steps (Home Assistant OS)
 
-### Updating an existing preview
+1. Use the **Add repository** badge above, or open **Settings → Apps → Install app → ⋮ → Repositories** and add `https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-assistant`.
+2. Find **Pet Bathroom Tracker (Preview)** in the app store and choose **Install**.
+3. Open **Configuration** and choose your time zone (e.g., `America/New_York`). Save the options.
+4. Start the app and select **Open Web UI**. Click **Add your first pet** and choose a name/icon.
+5. Select **Show in sidebar** so other non-admin Home Assistant accounts can use the tracker. Optionally enable **Start on boot** and **Watchdog** after verifying operation.
 
-Create a manual Home Assistant backup with this app selected, then update through Home Assistant when a new release is published. **Do not uninstall** the app, because that can remove its persistent data. If you're still running an old Local-app installation, keep using its existing folder and apply new source files there; a GitHub-installed app is a separate app identity from `local_pet_bathroom_tracker` and does **not** automatically migrate the local app's database.
+No Proxmox, Samba, extra Linux server, or port forwarding is needed for users running Home Assistant OS. **This is not a HACS integration** and is not an official Home Assistant app.
 
-## Using the tracker
+### Updating safely
 
-- Add pets with custom names and emoji; rename, archive and restore pets without losing their existing trip history.
-- Record pee, poop, or both with a timestamp and optional note. New-entry time stays current unless manually adjusted.
-- Switch dates to see daily totals, hourly trips, and editable history.
-- On phones, select one pet for the timeline; on larger screens, see multiple pet columns at once.
-- All authenticated Home Assistant accounts with access to the app share the **same data**, including the ability to edit and delete records. This is not a per-user private journal.
+1. Create a manual Home Assistant backup containing this app. Save the encryption recovery key in a secure location.
+2. On **Settings → Apps**, open its available update and review the changelog.
+3. **Update in place**; do not uninstall, as that can remove persistent app data.
+4. Verify saved pets and entries remain after the update.
 
-## Data and backups
+Older **Local app** installations have a different Supervisor app identity: adding the public GitHub repository does **not** automatically transfer their data. Back up first and plan a separate migration.
 
-Pet records are stored locally in the app's private persistent `/data/tracker.db` (SQLite). Home Assistant Ingress provides authentication; **no LAN port or separate cloud service is required**.
+## How it works
 
-The app declares `backup: cold`, so Home Assistant stops it briefly while copying persistent data during an app backup. Keep the backup encryption recovery key in a safe place. For recovery details see [RECOVERY.md](RECOVERY.md).
+Each pet has an entry form and counts for the selected day. The timeline shows trips with distinct colors for pee, poop and combined events. Entries can be edited or deleted from history. With more pets, the timeline expands on desktop; on phones, choose which pet to display. Archived pets can be restored later, with their records retained.
 
-**Recovery test completed (Oct 23, 2026):** A Home Assistant encrypted app backup from the preview was uploaded to a separate Home Assistant OS VM (VM 103) and the preview app was restored **without restoring production settings**. Existing pets, icons, and bathroom history were present; changing a pet name then restarting the restored app preserved the change. This provides direct restore evidence on the tested `amd64` environment, not a guarantee for every Home Assistant version and device.
+Data is shared with everyone who can access the app via Home Assistant—there are no per-user permissions. The server doesn't publish a LAN port or require an external account. The database lives at `/data/tracker.db` in persistent app storage.
 
-## Development
+## Privacy and backup
+
+All tracking data stays on your Home Assistant system unless you back it up to other destinations. Home Assistant Ingress authenticates users. The project does not include third-party telemetry. **Anyone with access to the app can change or delete its data.** Keep backups of the app and its SQLite database; Home Assistant app backup uses `backup: cold` to stop writes during the backup.
+
+**Verified recovery (October 23, 2026):** A manual encrypted app backup was restored to a separate Home Assistant OS VM, recovering pet names, an emoji icon, and bathroom records. An edit persisted after restarting the restored app. This is a successful isolated test, not a guarantee across all configurations.
+
+## Compatibility and status
+
+| Item | Status |
+|---|---|
+| Home Assistant OS / AMD64 | Tested (installation, use, backup restore) |
+| Home Assistant OS / ARM64 | Listed in manifest, **not yet tested** |
+| Home Assistant Container / Core | App store installation method not supported |
+| GitHub-hosted installation | Tested |
+| Built container image | Built on the HA machine; pre-built images not yet available |
+| Current release channel | Experimental preview |
+
+**Screenshots:** Representative, cropped screenshots will be added before promoting this experimental preview. Do not publish captures that show private IP addresses, accounts, pet details, or access tokens.
+
+## Documentation and help
+
+- [Home Assistant in-app documentation](pet_bathroom_tracker/DOCS.md)
+- [Release history and upgrade notes](CHANGELOG.md)
+- [Backup and recovery guide](RECOVERY.md)
+- [Security and privacy](SECURITY.md)
+- [Release verification checklist](RELEASE_CHECKLIST.md)
+- [Publishing and maintenance](PUBLISHING.md)
+- [Issues and bug reports](https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-assistant/issues)
+
+## Development and automated checks
 
 ```bash
 python3 -m pip install pyyaml
 python3 -m unittest discover -s tests -v
 ```
 
-The `tests/` folder covers database creation/migration, corrupt records, archival, backup snapshots, and configuration. An independent GitHub Actions workflow runs syntax checks and tests. The latest test status and remaining release gates are in [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md).
-
-## Documentation
-
-- [Changes and upgrade notes](CHANGELOG.md)
-- [Restore and recovery](RECOVERY.md)
-- [Security and privacy](SECURITY.md)
-- [Release checklist](RELEASE_CHECKLIST.md)
-- [Publishing to GitHub](PUBLISHING.md)
-- [Home Assistant in-app documentation](pet_bathroom_tracker/DOCS.md)
+The [Source checks workflow](.github/workflows/checks.yml) runs database tests, Python syntax checks, shell syntax checks and a JavaScript syntax check for pushes and pull requests. These checks cannot substitute for testing on multiple Home Assistant OS architectures.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+[MIT](LICENSE)
