@@ -2,6 +2,7 @@
 import importlib.util
 import json
 import os
+import re
 import sqlite3
 import subprocess
 import sys
@@ -25,7 +26,8 @@ def init_database(db):
 class ReleaseTests(unittest.TestCase):
     def test_manifest_contains_recovery_and_ingress_safeguards(self):
         config = yaml.safe_load((APP/'config.yaml').read_text())
-        self.assertEqual(config['version'], '0.5.5')
+        self.assertIsInstance(config['version'], str)
+        self.assertRegex(config['version'], r'^\d+\.\d+\.\d+$')
         self.assertEqual(config['backup'], 'cold')
         self.assertTrue(config['ingress'])
         self.assertFalse(config['panel_admin'])

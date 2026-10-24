@@ -71,3 +71,13 @@
 - [ ] Additional external security review
 
 **Experimental preview:** These remaining checks prevent declaring a stable v1.0 release.
+
+## v0.5.6 — Release candidate validation (pending)
+
+- [ ] Source checks including Flask API and dashboard JavaScript regressions pass on security-v056 branch.
+- [ ] Native AMD64 and ARM64 container architecture tests pass on security-v056 branch.
+- [ ] CodeQL reports no newly introduced findings on the branch pull request.
+- [ ] Separate branch-based Home Assistant app installs and runs on isolated VM 103 (fresh data; not an upgrade test).
+- [ ] After merging, v0.5.5 → v0.5.6 in-place update on VM 103 preserves existing pets, icons, and history.
+- [ ] README/changelog candidate wording updated after completing release verification.
+- [ ] v0.5.6 GitHub release published only after testing and update checks pass.

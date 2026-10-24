@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.5.6 — Input validation and timeline display fixes (release candidate; not yet published)
+
+### Fixed
+- Reject fractional, boolean, noncanonical, negative, or out-of-range pet IDs in bathroom-entry requests with a controlled 400 response.
+- Reject zero and out-of-range pet/entry IDs in route paths before SQLite operations, returning 404 instead of causing server errors.
+- Display saved local bathroom timestamps without browser daylight-saving-time normalization.
+
+### Testing and maintenance
+- Add Flask API regression tests for Ingress restrictions, malformed JSON, size limits, pet/entry lifecycle, archived records, and invalid IDs.
+- Add JavaScript regressions for daylight-saving-time timestamps and HTML escaping.
+- Install application dependencies in the source-check workflow and remove the hard-coded manifest version assertion in release tests.
+
+### Upgrade notes
+- This version is a test candidate until the branch checks and isolated Home Assistant OS testing finish.
+- No database schema change or data migration is required.
+- Back up the existing Home Assistant app before updating; do not uninstall it to upgrade.
+- The project remains an experimental preview, without independent external security review or full ARM64 Home Assistant OS runtime verification.
+
 ## 0.5.5 — Security maintenance
 
 ### Fixed
