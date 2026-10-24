@@ -43,6 +43,7 @@
 - [x] GitHub Actions CodeQL #3 passed
 - [x] App configuration, dashboard, documentation, and recovery test updated to v0.5.5
 - [x] Windows tests investigated; remaining failures involve temporary SQLite database file locks (WinError 32)
+- [x] GitHub Actions native AMD64 and ARM64 container architecture tests passed on main; both jobs completed successfully
 
 ### Home Assistant OS upgrade testing (AMD64)
 - [x] Created Proxmox VM 103 snapshot: before-pet-tracker-v055
@@ -61,7 +62,8 @@
 
 ## Remaining stability/publication work
 
-- [ ] ARM64 install/build/runtime test
+- [x] Native ARM64 container build and runtime tests passed on GitHub Actions ubuntu-24.04-arm runner; health, database operations, permissions, and restart persistence verified
+- [ ] Full ARM64 Home Assistant OS installation, Ingress, and runtime verification
 - [x] Dependency vulnerability review and routine upgrade process
 - [x] Custom app icon, logo, and GitHub hero artwork
 - [x] Cropped UI screenshots for README (desktop, mobile, pet management; earlier preview test builds)
