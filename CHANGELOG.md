@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.5.3 — App icon and public branding
+
+### Added
+- New square dog-and-cat tracking icon (`icon.png`) for Home Assistant app listings and installed-app cards.
+- Matching landscape app logo (`logo.png`) for the Home Assistant app details page.
+- GitHub banner, promotional artwork, and transparent icon in `assets/`.
+- Visual branding in the repository README.
+
+### Improved
+- Dashboard version label updated to `Preview 0.5.3`.
+- In-app troubleshooting documents the possible missing graphical Update control and the Supervisor update entity; **no mandatory Home Assistant restart** is required on install.
+
+### Upgrade notes
+- **No API, database schema, or tracking behavior changes.** Existing pets, icons, trips, and archived history should remain unchanged on an in-place update.
+- Make a Home Assistant app backup before updating. Do **not uninstall** the existing app to update it.
+- ARM64 runtime testing remains outstanding. This is still an experimental preview.
+
 ## 0.5.2 — Public installation documentation polish
 
 ### Fixed

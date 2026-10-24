@@ -49,6 +49,7 @@ A Home Assistant encrypted backup `.tar` file is **not** a raw SQLite database. 
 - **App won't start:** Inspect the app's **Log** tab for database integrity errors or runtime failures.
 - **Dashboard is forbidden/unreachable:** Use **Open Web UI** or its Home Assistant sidebar entry, not an internal container URL.
 - **Times look wrong:** Check the configured time zone. Timestamps use local wall-clock values; take extra care with historical trips around daylight saving time.
+- **Update available but no graphical Update button:** Check **Settings → Devices & services → Entities** for the **Pet Bathroom Tracker (Preview) → Update** entity under the Home Assistant Supervisor integration. If its status is disabled, enable it. Home Assistant may take time to discover the entity after first installation. If the entity is missing, restarting Home Assistant Core is an optional troubleshooting step; it is not normally required for installation. Do not uninstall the app to update it.
 - **Records missing after update:** Don't uninstall or delete app data. Check your saved app backup before attempting recovery.
 
 ## Security and privacy

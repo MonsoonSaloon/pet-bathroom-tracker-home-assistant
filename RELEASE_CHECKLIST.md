@@ -7,7 +7,8 @@
 - [x] App configuration includes Ingress, cold backups, non-admin sidebar access, and Watchdog health URL
 - [x] Dashboard version label matches manifest version
 - [x] GitHub Actions **Source checks** passed after first publication of v0.5.1
-- [ ] GitHub Actions passes after v0.5.2 update
+- [x] GitHub Actions passed after v0.5.2 update
+- [ ] GitHub Actions passes after v0.5.3 branding update
 
 ## Real-world Home Assistant OS (AMD64)
 
@@ -19,7 +20,8 @@
 - [x] Public GitHub repository installed successfully on clean Home Assistant OS; welcome screen appeared
 - [x] New GitHub installation added a pet and pee/poop entry; entries survived restart
 - [x] Watchdog enabled on the earlier preview without immediate reported issues
-- [ ] In-place v0.5.1 → v0.5.2 upgrade tested with existing records (next)
+- [x] In-place v0.5.1 → v0.5.2 upgrade tested with existing records via Home Assistant CLI; Test pet 1 and 7:29 PM combined trip preserved
+- [ ] Graphical Update button and data persistence tested on next release without using CLI first
 - [ ] Public GitHub-install version: full add/edit/delete/rename/archive workflow rechecked
 - [ ] Public GitHub-install version: non-admin account tested
 - [ ] Watchdog fault recovery tested intentionally in an isolated instance
@@ -28,7 +30,8 @@
 
 - [ ] ARM64 install/build/runtime test
 - [ ] Dependency vulnerability review and routine upgrade process
-- [ ] Sanitized README screenshots and, if desired, custom app logo
+- [x] Custom app icon, logo, and GitHub hero artwork
+- [ ] Sanitized application UI screenshots for README
 - [ ] Optional pre-built amd64/aarch64 container images
 - [ ] Additional external security review
 

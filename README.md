@@ -1,8 +1,10 @@
 # Pet Bathroom Tracker — Home Assistant App
 
+![Pet Bathroom Tracker — dog and cat with a tracking clock](assets/github-banner.png)
+
 ![Developer preview](https://img.shields.io/badge/status-experimental-orange) ![Home Assistant OS](https://img.shields.io/badge/platform-Home%20Assistant%20OS-blue)
 
-**Preview v0.5.2** — a free, local-first bathroom tracker for multiple pets, shared inside Home Assistant. Record pee, poop, or both; review a color-coded timeline; and edit history from your phone, tablet, or computer.
+**Preview v0.5.3** — a free, local-first bathroom tracker for multiple pets, shared inside Home Assistant. Record pee, poop, or both; review a color-coded timeline; and edit history from your phone, tablet, or computer.
 
 [![Add Pet Bathroom Tracker repository to your Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FMonsoonSaloon%2Fpet-bathroom-tracker-home-assistant)
 
@@ -59,7 +61,7 @@ All tracking data stays on your Home Assistant system unless you back it up to o
 | Built container image | Built on the HA machine; pre-built images not yet available |
 | Current release channel | Experimental preview |
 
-**Screenshots:** Representative, cropped screenshots will be added before promoting this experimental preview. Do not publish captures that show private IP addresses, accounts, pet details, or access tokens.
+**Screenshots:** Representative UI screenshots will be added before promoting this experimental preview. Branding artwork is stored in `assets/`. Do not publish captures that show private IP addresses, accounts, pet details, or access tokens.
 
 ## Documentation and help
 
