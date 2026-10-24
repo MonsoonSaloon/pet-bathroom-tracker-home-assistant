@@ -21,7 +21,7 @@
 - [x] New GitHub installation added a pet and pee/poop entry; entries survived restart
 - [x] Watchdog enabled on the earlier preview without immediate reported issues
 - [x] In-place v0.5.1 → v0.5.2 upgrade tested with existing records via Home Assistant CLI; Test pet 1 and 7:29 PM combined trip preserved
-- [ ] Graphical Update button and data persistence tested on next release without using CLI first
+- [x] v0.5.2 → v0.5.3 GUI update tested without CLI or Core restart; installed version, logo and saved Test pet 1 / trip verified
 - [ ] Public GitHub-install version: full add/edit/delete/rename/archive workflow rechecked
 - [ ] Public GitHub-install version: non-admin account tested
 - [ ] Watchdog fault recovery tested intentionally in an isolated instance
@@ -31,7 +31,7 @@
 - [ ] ARM64 install/build/runtime test
 - [ ] Dependency vulnerability review and routine upgrade process
 - [x] Custom app icon, logo, and GitHub hero artwork
-- [ ] Sanitized application UI screenshots for README
+- [x] Cropped UI screenshots for README (desktop, mobile, pet management; earlier preview test builds)
 - [ ] Optional pre-built amd64/aarch64 container images
 - [ ] Additional external security review
 

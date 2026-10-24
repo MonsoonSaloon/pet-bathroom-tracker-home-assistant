@@ -19,6 +19,22 @@
 - **Shared household data:** authorized Home Assistant users see the same database through Ingress.
 - **Local storage:** private SQLite database, with Home Assistant app backups (`backup: cold`).
 
+## Screenshots
+
+These are **real screenshots from earlier preview test builds**, cropped to show only the app. They use demonstration pet names; the same tracking and management features are available in v0.5.3.
+
+### Desktop — multi-pet tracker and color-coded timeline
+
+![Three demonstration pets with individual trip forms, daily totals and a color-coded hourly tracking timeline](assets/screenshots/desktop-tracking.png)
+
+### Mobile — daily totals and one-pet timeline selector
+
+<img src="assets/screenshots/mobile-timeline.png" alt="Mobile pet-tracker view with daily counts and a selector for which pet to display in the timeline" width="375">
+
+### Manage pets — rename, archive and restore
+
+<img src="assets/screenshots/manage-pets.png" alt="Manage pets dialog with rename, archive, restore, and add pet controls" width="650">
+
 ## Install in five steps (Home Assistant OS)
 
 1. Use the **Add repository** badge above, or open **Settings → Apps → Install app → ⋮ → Repositories** and add `https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-assistant`.
@@ -61,7 +77,7 @@ All tracking data stays on your Home Assistant system unless you back it up to o
 | Built container image | Built on the HA machine; pre-built images not yet available |
 | Current release channel | Experimental preview |
 
-**Screenshots:** Representative UI screenshots will be added before promoting this experimental preview. Branding artwork is stored in `assets/`. Do not publish captures that show private IP addresses, accounts, pet details, or access tokens.
+**Screenshots:** The gallery above uses cropped screenshots from earlier test versions with demonstration records. Branding artwork is in `assets/`. Future screenshots should also exclude private IP addresses, account identifiers, personal pet details, and access tokens.
 
 ## Documentation and help
 
