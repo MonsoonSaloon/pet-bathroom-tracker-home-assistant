@@ -181,8 +181,8 @@ def add_dog():
         payload = request.get_json(silent=True)
         name = validate_pet_name(payload)
         icon = validate_pet_icon(payload)
-    except ValueError as exc:
-        return jsonify(error=str(exc)), 400
+    except ValueError:
+        return jsonify(error='Invalid pet name or icon'), 400
     with get_db() as db:
         if name_exists(db, name):
             return jsonify(error='A pet with that name already exists, including archived pets'), 409
@@ -198,8 +198,8 @@ def rename_dog(dog_id):
         payload = request.get_json(silent=True)
         name = validate_pet_name(payload)
         icon = validate_pet_icon(payload)
-    except ValueError as exc:
-        return jsonify(error=str(exc)), 400
+    except ValueError:
+        return jsonify(error='Invalid pet name or icon'), 400
     with get_db() as db:
         if not db.execute('SELECT id FROM dogs WHERE id=?', (dog_id,)).fetchone():
             return jsonify(error='Pet not found'), 404
@@ -244,8 +244,8 @@ def restore_dog(dog_id):
 def entries():
     try:
         chosen = parse_date(request.args.get('date', datetime.now(TZ).date().isoformat()))
-    except ValueError as exc:
-        return jsonify(error=str(exc)), 400
+    except ValueError:
+        return jsonify(error='Invalid date; use YYYY-MM-DD'), 400
     with get_db() as db:
         rows = db.execute('''
             SELECT e.id, e.dog_id, d.name AS dog_name, e.timestamp,
@@ -261,8 +261,8 @@ def entries():
 def add_entry():
     try:
         dog_id, timestamp, pee, poop, notes = validate_entry(request.get_json(silent=True))
-    except ValueError as exc:
-        return jsonify(error=str(exc)), 400
+    except ValueError:
+        return jsonify(error='Invalid trip details; check pet, time, pee/poop, and notes'), 400
     with get_db() as db:
         dog = db.execute('SELECT id FROM dogs WHERE id = ? AND active = 1', (dog_id,)).fetchone()
         if not dog:
@@ -280,8 +280,8 @@ def add_entry():
 def edit_entry(entry_id):
     try:
         dog_id, timestamp, pee, poop, notes = validate_entry(request.get_json(silent=True))
-    except ValueError as exc:
-        return jsonify(error=str(exc)), 400
+    except ValueError:
+        return jsonify(error='Invalid trip details; check pet, time, pee/poop, and notes'), 400
     with get_db() as db:
         existing = db.execute('SELECT dog_id FROM bathroom_entries WHERE id=?', (entry_id,)).fetchone()
         if not existing:
@@ -317,8 +317,8 @@ def delete_entry(entry_id):
 def summary():
     try:
         chosen = parse_date(request.args.get('date', datetime.now(TZ).date().isoformat()))
-    except ValueError as exc:
-        return jsonify(error=str(exc)), 400
+    except ValueError:
+        return jsonify(error='Invalid date; use YYYY-MM-DD'), 400
     with get_db() as db:
         rows = db.execute('''
             SELECT d.id AS dog_id, d.name AS dog_name,
