@@ -61,7 +61,7 @@
 ## Remaining stability/publication work
 
 - [ ] ARM64 install/build/runtime test
-- [ ] Dependency vulnerability review and routine upgrade process
+- [x] Dependency vulnerability review and routine upgrade process
 - [x] Custom app icon, logo, and GitHub hero artwork
 - [x] Cropped UI screenshots for README (desktop, mobile, pet management; earlier preview test builds)
 - [ ] Optional pre-built amd64/aarch64 container images

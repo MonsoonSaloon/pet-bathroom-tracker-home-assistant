@@ -55,6 +55,70 @@ Keep the release designated as experimental until the outstanding checks have be
 
 For upgrades, do not uninstall. Maintain an independent encrypted Home Assistant backup and encryption emergency kit.
 
+
+## Dependency maintenance
+
+Pet Bathroom Tracker uses GitHub Dependabot to monitor dependencies and propose updates.
+
+### Automated monitoring
+
+Dependabot is configured in `.github/dependabot.yml` to check the following ecosystems weekly:
+
+- Python packages in `pet_bathroom_tracker/requirements.txt`
+- GitHub Actions used by repository workflows
+- Docker base images in `pet_bathroom_tracker/Dockerfile`
+
+Dependabot opens pull requests for available updates. Updates are reviewed and merged manually; automatic merging is not enabled.
+
+GitHub Dependabot alerts, CodeQL, and secret scanning provide additional security monitoring.
+
+### Weekly maintenance procedure
+
+1. Open the repository's Pull Requests page and review open Dependabot pull requests.
+2. Check Security and quality for newly reported vulnerabilities or exposed secrets.
+3. Review each dependency update's release notes, breaking changes, and compatibility requirements.
+4. Inspect the proposed file changes.
+5. Confirm GitHub Actions tests and CodeQL checks pass.
+6. Merge compatible updates individually.
+7. Verify automated checks pass again on the main branch.
+8. Document significant dependency changes in the project changelog when appropriate.
+
+### Testing requirements
+
+GitHub Actions-only updates:
+- Confirm source checks and relevant container tests pass.
+- Verify the updated workflows succeed after merging.
+- No Home Assistant app version increase is required if application files are unchanged.
+
+Python or Docker dependency updates:
+- Review compatibility with the supported Home Assistant OS environment.
+- Confirm automated source and container tests pass.
+- Test application startup and normal tracking functionality on an isolated Home Assistant installation when appropriate.
+- Verify existing pet records remain intact.
+- Create a backup before installing an application update.
+- Increment the application version when publishing a new application build.
+
+### Security considerations
+
+- Never automatically merge dependency updates without review.
+- Prioritize security fixes based on severity and actual exposure.
+- Do not publish credentials, tokens, databases, or private user information in issues or logs.
+- Use GitHub's private vulnerability reporting feature for security issues.
+- Continue periodic manual reviews; automated scanning does not replace security testing.
+
+### Initial maintenance verification — October 24, 2026
+
+- [x] Dependabot configured for Python, GitHub Actions, and Docker.
+- [x] Weekly dependency update checks activated.
+- [x] Dependabot successfully created update pull requests.
+- [x] actions/setup-node updated from v4 to v7.
+- [x] actions/checkout updated from v4 to v7.
+- [x] actions/setup-python updated from v5 to v7.
+- [x] Automated checks passed after each merge.
+- [x] No open dependency update pull requests remained after the initial review.
+
+Pet Bathroom Tracker remains an experimental preview. Dependency updates should continue to be reviewed and tested before release.
+
 ## Security hygiene
 
 Review every changed file for keys, personal IPs, user-specific settings, and SQLite databases before pushing. The `.gitignore` covers common file patterns, but is not a security audit. Do not include data snapshots or Home Assistant backup archives in the public repository.
