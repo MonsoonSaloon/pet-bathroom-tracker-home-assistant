@@ -10,6 +10,14 @@
 
 > **Experimental preview.** Tested on AMD64 Home Assistant OS: installation from this public repository, first-pet onboarding, shared access by non-admin Home Assistant users, trip persistence across app restarts, an in-place upgrade from v0.5.3 to v0.5.4 with records preserved, and backup recovery. A fresh reinstall also registered its Home Assistant update entity without restarting Core. Automated ARM64 container tests passed, but a full Home Assistant OS installation on ARM64 hardware has not been verified. No independent security audit has been completed.
 
+## ❤️ Support the Project
+
+If you find Pet Bathroom Tracker useful and want to support continued development, you can leave a one-time donation on Ko-fi.
+
+[![Support on Ko-fi](https://img.shields.io/badge/Support%20on-Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/monsoonsaloon)
+
+Pet Bathroom Tracker is free and open source, and I intend to keep it that way. Donations are optional, start at $1, and help support this project and future open-source development.
+
 ## Features
 
 - **Any number of pets:** custom names, emoji icons, and archiving without deleting history.
@@ -128,18 +136,6 @@ python3 -m unittest discover -s tests -v
 ```
 
 The [Source checks workflow](.github/workflows/checks.yml) runs database tests, Python syntax checks, shell syntax checks and a JavaScript syntax check for pushes and pull requests. The repository also runs automated AMD64 and ARM64 container architecture tests. These checks cannot substitute for a full Home Assistant OS installation test on each architecture.
-
-## ❤️ Support the Project
-
-Pet Bathroom Tracker is completely free and open source, and I intend to keep it that way.
-
-If you find the app useful and would like to support its continued development, you can leave a one-time donation through Ko-fi.
-
-**[☕ Support Pet Bathroom Tracker on Ko-fi](https://ko-fi.com/monsoonsaloon)**
-
-Donations start at just $1 and are entirely optional. Every contribution is appreciated and helps support this project and future open-source development.
-
-Thank you for your support!
 
 ## License
 
