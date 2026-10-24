@@ -32,7 +32,7 @@ body:
     attributes:
       label: Pet Bathroom Tracker version
       description: "Shown on the app Info page or near the top of its dashboard."
-      placeholder: "e.g. 0.5.4"
+      placeholder: "e.g. 0.5.5"
     validations:
       required: true
   - type: input

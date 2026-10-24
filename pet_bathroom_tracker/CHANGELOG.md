@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.5.5 — Security maintenance
+
+### Fixed
+- Resolved six medium-severity CodeQL findings involving potential information disclosure through exception responses.
+- Replaced exception-derived responses with consistent, safe validation messages.
+- Restricted GitHub Actions workflow permissions to read-only repository access.
+- Resolved all seven CodeQL security findings identified in v0.5.4.
+
+### Security and testing
+- CodeQL security analysis completed with zero remaining open findings after the fixes.
+- Python source checks and automated AMD64/ARM64 container tests passed.
+- GitHub Dependabot and secret scanning reported zero open alerts at the time of release preparation.
+
+### Upgrade notes
+- No database schema changes or intentional changes to bathroom-tracking behavior.
+- Existing pets, icons, archived records, and bathroom history should remain intact.
+- Make a Home Assistant backup before updating.
+- Update the existing app in place. Do not uninstall it.
+- This remains an experimental preview. Real ARM64 Home Assistant OS testing is still outstanding.
+
 ## 0.5.4 — Dependency and storage-permissions maintenance
 
 ### Security hardening

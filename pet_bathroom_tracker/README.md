@@ -2,7 +2,7 @@
 
 A private-to-your-home **shared pet bathroom log** for Home Assistant OS. Track pee, poop, or both, review an hourly timeline, and keep persistent history for multiple pets.
 
-**Preview version: 0.5.4** · **Status: Experimental** · **Runs inside Home Assistant using Ingress**
+**Preview version: 0.5.5** · **Status: Experimental** · **Runs inside Home Assistant using Ingress**
 
 ## Get started
 

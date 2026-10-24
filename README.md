@@ -4,7 +4,7 @@
 
 ![Developer preview](https://img.shields.io/badge/status-experimental-orange) ![Home Assistant OS](https://img.shields.io/badge/platform-Home%20Assistant%20OS-blue)
 
-**Preview v0.5.4** — a free, local-first bathroom tracker for multiple pets, shared inside Home Assistant. Record pee, poop, or both; review a color-coded timeline; and edit history from your phone, tablet, or computer.
+**Preview v0.5.5** — a free, local-first bathroom tracker for multiple pets, shared inside Home Assistant. Record pee, poop, or both; review a color-coded timeline; and edit history from your phone, tablet, or computer.
 
 [![Add Pet Bathroom Tracker repository to your Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FMonsoonSaloon%2Fpet-bathroom-tracker-home-assistant)
 
