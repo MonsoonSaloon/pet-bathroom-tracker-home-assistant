@@ -4,11 +4,11 @@
 
 ![Developer preview](https://img.shields.io/badge/status-experimental-orange) ![Home Assistant OS](https://img.shields.io/badge/platform-Home%20Assistant%20OS-blue)
 
-**Preview v0.5.5** — a free, local-first bathroom tracker for multiple pets, shared inside Home Assistant. Record pee, poop, or both; review a color-coded timeline; and edit history from your phone, tablet, or computer.
+**Preview v0.5.6 (release candidate; not published yet)** — a free, local-first bathroom tracker for multiple pets, shared inside Home Assistant. Record pee, poop, or both; review a color-coded timeline; and edit history from your phone, tablet, or computer.
 
 [![Add Pet Bathroom Tracker repository to your Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FMonsoonSaloon%2Fpet-bathroom-tracker-home-assistant)
 
-> **Experimental preview.** Tested on AMD64 Home Assistant OS: installation from this public repository, first-pet onboarding, shared access by non-admin Home Assistant users, trip persistence across app restarts, an in-place upgrade from v0.5.3 to v0.5.4 with records preserved, and backup recovery. A fresh reinstall also registered its Home Assistant update entity without restarting Core. Automated ARM64 container tests passed, but a full Home Assistant OS installation on ARM64 hardware has not been verified. No independent security audit has been completed.
+> **Experimental preview.** v0.5.5 has been tested on AMD64 Home Assistant OS: public-repository installation, first-pet onboarding, shared non-admin access, trip persistence across restarts, v0.5.4 → v0.5.5 in-place upgrade, backup recovery, pet management, and Watchdog crash recovery. Native AMD64 and ARM64 container builds and functional checks passed in GitHub Actions. Full Home Assistant OS installation on ARM64 and an independent security audit remain unverified. v0.5.6 is being tested on a separate branch.
 
 ## ❤️ Support the Project
 
@@ -29,7 +29,7 @@ Pet Bathroom Tracker is free and open source, and I intend to keep it that way. 
 
 ## Screenshots
 
-These are **real screenshots from earlier preview test builds**, cropped to show only the app. They use demonstration pet names; the same tracking and management features are available in v0.5.4.
+These are **real screenshots from earlier preview test builds**, cropped to show only the app. They use demonstration pet names; the same tracking and management features are available in the v0.5.5 public preview and this v0.5.6 candidate.
 
 ### Desktop — multi-pet tracker and color-coded timeline
 
@@ -62,7 +62,7 @@ No Proxmox, Samba, extra Linux server, or port forwarding is needed for users ru
 3. **Update in place**; do not uninstall, as that can remove persistent app data.
 4. Verify saved pets and entries remain after the update. The update may require the app container to restart; it should not require restarting Home Assistant Core.
 
-**Verified update test:** On an AMD64 Home Assistant OS test installation, updating v0.5.3 to v0.5.4 preserved the existing pet and its bathroom history.
+**Verified update tests:** On AMD64 Home Assistant OS, v0.5.3 → v0.5.4 and v0.5.4 → v0.5.5 preserved existing pets and bathroom history. The v0.5.6 candidate upgrade is not yet verified.
 
 Older **Local app** installations have a different Supervisor app identity: adding the public GitHub repository does **not** automatically transfer their data. Back up first and plan a separate migration.
 
@@ -109,7 +109,7 @@ All tracking data stays on your Home Assistant system unless you back it up to o
 
 - Confirm that a newer version actually exists. If the installed and latest versions match, an **Update** button is not expected.
 - The **Update** entity may be found under **Settings → Devices & services → Entities** by searching for **Pet Bathroom Tracker**; its status can show **Up-to-date**.
-- Refresh the Home Assistant interface and recheck the app details before considering any Core restart. During v0.5.4 testing, the update entity appeared on a clean installation without a Core restart.
+- Refresh the Home Assistant interface and recheck the app details before considering any Core restart. During prior preview testing, the update entity appeared on a clean installation without a Core restart.
 - For an issue that persists, use the [bug report form](https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-assistant/issues/new/choose).
 
 **Records disappear after uninstalling**

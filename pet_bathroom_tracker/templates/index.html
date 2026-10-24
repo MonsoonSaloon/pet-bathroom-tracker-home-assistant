@@ -26,7 +26,7 @@
 .add-pet-form select{width:100%}
 @media(max-width:560px){.pet-row select{flex:1 1 110px}.welcome{padding:16px}}
 </style></head><body><main class="wrap">
-<header><div><h1>🐾 Pet Bathroom Tracker</h1><div class="sub">Shared through Home Assistant · Preview 0.5.5</div></div><div class="controls"><a class="home-link" href="/" target="_top" aria-label="Back to Home Assistant dashboard">← Dashboard</a><button id="managePets" type="button">⚙ Manage pets</button><button id="refresh" type="button">↻ Refresh</button></div></header>
+<header><div><h1>🐾 Pet Bathroom Tracker</h1><div class="sub">Shared through Home Assistant · Preview 0.5.6</div></div><div class="controls"><a class="home-link" href="/" target="_top" aria-label="Back to Home Assistant dashboard">← Dashboard</a><button id="managePets" type="button">⚙ Manage pets</button><button id="refresh" type="button">↻ Refresh</button></div></header>
 <div id="notice" class="notice" role="alert"></div>
 <section id="welcome" class="panel welcome" hidden>
   <h2>Welcome to Pet Bathroom Tracker!</h2>
@@ -65,7 +65,7 @@ const iconOptions=selected=>PET_ICONS.map(([icon,name])=>`<option value="${esc(i
 const pad=n=>String(n).padStart(2,'0');
 const localNow=()=>{const d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`};
 const localDay=()=>localNow().slice(0,10);
-const timeOf=s=>{const d=new Date(s);return Number.isNaN(d.valueOf())?s.slice(11,16):d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})};
+const timeOf=s=>{const m=/^\d{4}-\d{2}-\d{2}T([01]\d|2[0-3]):([0-5]\d)/.exec(String(s));if(!m)return String(s).slice(11,16);const h=Number(m[1]);return `${h%12||12}:${m[2]} ${h<12?'AM':'PM'}`};
 function msg(s){$('notice').textContent=s;$('notice').classList.toggle('show',!!s)}
 async function api(path,options={}){const res=await fetch(path,{credentials:'same-origin',cache:'no-store',...options});let data;try{data=await res.json()}catch{throw new Error(`Server response ${res.status}`)}if(!res.ok)throw new Error(data.error||`Request failed (${res.status})`);return data}
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

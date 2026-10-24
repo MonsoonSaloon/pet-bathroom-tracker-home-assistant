@@ -6,16 +6,18 @@ Public repository: https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-as
 
 The repository root contains `repository.yaml` and the app directory `pet_bathroom_tracker/` with its `config.yaml`. Home Assistant OS can add the repository from **Settings → Apps → Install app → ⋮ → Repositories** or via the [one-click Add repository link](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FMonsoonSaloon%2Fpet-bathroom-tracker-home-assistant).
 
-## Tested so far (October 23, 2026)
+## Tested so far (October 24, 2026)
 
 - The GitHub `main` branch was pushed and the **Source checks** workflow completed successfully.
 - The public repository was added to a clean Home Assistant OS VM on AMD64.
 - The app installed, started, displayed a zero-pet welcome screen, accepted a pet and a combined pee/poop trip, and retained those records after an app restart.
 - An earlier encrypted Home Assistant app backup was restored to a disposable second HA OS VM, preserving existing pets, icons, and history; an edit persisted through restart.
+- The v0.5.5 app on isolated VM 103 passed pet management, non-admin shared access, and intentional Supervisor Watchdog recovery tests.
+- Native amd64 and aarch64 Docker builds, entry operations, permissions, and restart-persistence checks passed on GitHub Actions.
 
 ## Still required before a stable release
 
-Pet Bathroom Tracker v0.5.5 was published on October 24, 2026, as an experimental preview.
+Pet Bathroom Tracker v0.5.5 was published on October 24, 2026, as an experimental preview. Version v0.5.6 is under validation on a separate branch and has not been released.
 
 ### Completed verification
 - [x] Public GitHub repository installation tested on AMD64 Home Assistant OS.
@@ -32,16 +34,23 @@ Pet Bathroom Tracker v0.5.5 was published on October 24, 2026, as an experimenta
 ### Outstanding before stable v1.0
 - [ ] Test installation and runtime on physical ARM64/Raspberry Pi Home Assistant OS hardware.
 - [ ] Complete a broader independent security review.
-- [ ] Establish an ongoing dependency update and vulnerability review process.
-- [ ] Recheck the complete pet-management workflow on the public release.
-- [ ] Reverify non-admin household access on the current public release.
-- [ ] Test intentional Watchdog fault recovery in an isolated installation.
 
 Optional future improvements:
 - Publish pre-built AMD64/ARM64 container images.
 - Expand automated testing to cover additional operating environments.
 
 Keep the release designated as experimental until the outstanding checks have been evaluated.
+
+## Testing a branch safely
+
+Home Assistant Supervisor supports Git branch repository URLs such as
+`https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-assistant#security-v056`.
+The `#branch` suffix creates a **different repository identity and different app data**.
+It can be installed alongside the main-branch app on the isolated test VM.
+It **does not** exercise the in-place upgrade or share the main app's historical records.
+After branch checks and fresh-install tests pass, merge and test the real in-place update
+of the existing GitHub-installed app on the disposable VM **before** publishing a release.
+Never use production VM 100 for preview tests.
 
 ## Making changes
 

@@ -1,4 +1,5 @@
 import os
+import re
 import sqlite3
 from contextlib import contextmanager
 from datetime import date, datetime
@@ -10,6 +11,7 @@ app = Flask(__name__)
 # Avoid accepting unexpectedly large JSON payloads on write endpoints.
 app.config['MAX_CONTENT_LENGTH'] = 64 * 1024
 PET_ICONS = ('🐶', '🐱', '🐰', '🐹', '🐦', '🐢', '🐾', '🐴', '🐸', '🐠')
+SQLITE_MAX_ID = 2**63 - 1
 # Storage survives Home Assistant app restarts and updates.
 DATABASE = os.environ.get('DOG_TRACKER_DATABASE', '/data/tracker.db')
 TZ = ZoneInfo(os.environ.get('DOG_TRACKER_TIMEZONE', 'America/New_York'))
@@ -36,6 +38,19 @@ def get_db():
         raise
     finally:
         db.close()
+
+
+@app.url_value_preprocessor
+def reject_invalid_url_ids(endpoint, values):
+    # Werkzeug's integer URL converter accepts non-negative Python integers,
+    # including numbers larger than SQLite's signed 64-bit INTEGER type.
+    # Reject those IDs before any query attempts to bind them.
+    if not values:
+        return
+    for key in ('dog_id', 'entry_id'):
+        value = values.get(key)
+        if value is not None and not (1 <= value <= SQLITE_MAX_ID):
+            abort(404)
 
 
 @app.before_request
@@ -86,15 +101,24 @@ def parse_timestamp(value):
     return parsed.strftime('%Y-%m-%dT%H:%M:%S')
 
 
+def parse_pet_id(value):
+    # JSON floating-point values must never be silently truncated to pet IDs.
+    # Accept integer IDs and canonical decimal strings for API compatibility.
+    if type(value) is int:
+        pet_id = value
+    elif isinstance(value, str) and re.fullmatch(r'[1-9][0-9]*', value) and len(value) <= 19:
+        pet_id = int(value)
+    else:
+        raise ValueError('Valid dog_id is required')
+    if not (1 <= pet_id <= SQLITE_MAX_ID):
+        raise ValueError('Valid dog_id is required')
+    return pet_id
+
+
 def validate_entry(payload):
     if not isinstance(payload, dict):
         raise ValueError('Expected a JSON object')
-    try:
-        dog_id = int(payload.get('dog_id'))
-    except (TypeError, ValueError) as exc:
-        raise ValueError('Valid dog_id is required') from exc
-    if isinstance(payload.get('dog_id'), bool):
-        raise ValueError('Valid dog_id is required')
+    dog_id = parse_pet_id(payload.get('dog_id'))
     pee, poop = payload.get('pee'), payload.get('poop')
     if type(pee) is not bool or type(poop) is not bool:
         raise ValueError('pee and poop must be true or false')

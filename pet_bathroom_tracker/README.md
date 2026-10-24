@@ -2,7 +2,7 @@
 
 A private-to-your-home **shared pet bathroom log** for Home Assistant OS. Track pee, poop, or both, review an hourly timeline, and keep persistent history for multiple pets.
 
-**Preview version: 0.5.5** · **Status: Experimental** · **Runs inside Home Assistant using Ingress**
+**Preview version: 0.5.6 (release candidate; not published yet)** · **Status: Experimental** · **Runs inside Home Assistant using Ingress**
 
 ## Get started
 
@@ -40,4 +40,4 @@ A private-to-your-home **shared pet bathroom log** for Home Assistant OS. Track 
 - **Release notes:** https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-assistant/blob/main/CHANGELOG.md
 - **Report an issue:** https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-assistant/issues
 
-**Changes in v0.5.4:** updated Flask and Gunicorn dependencies and enforced restrictive SQLite storage permissions at app startup. Added automated checks for database permissions and container operation on AMD64 and ARM64. Tracking behavior and database schema are unchanged.
+**Planned v0.5.6 fixes:** stricter pet-ID validation, corrected daylight-saving-time display for saved wall-clock trips, and new automated API/dashboard regression tests. No database migration is required. This candidate must pass GitHub Actions and isolated Home Assistant testing before release.

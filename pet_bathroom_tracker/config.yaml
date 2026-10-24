@@ -1,6 +1,6 @@
 name: "Pet Bathroom Tracker (Preview)"
 slug: pet_bathroom_tracker
-version: "0.5.5"
+version: "0.5.6"
 description: "Shared bathroom tracking for pets, with a daily timeline."
 arch:
   - amd64
