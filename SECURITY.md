@@ -10,4 +10,16 @@
 - Do not upload `/data/tracker.db`, Home Assistant backups, auth tokens, IP addresses, or encryption keys to public bug reports.
 - The preview has not undergone a third-party security audit. Python dependencies are pinned in `requirements.txt`; check upstream advisories and update versions before a stable public release.
 
-Report security concerns privately to the eventual repository maintainer rather than posting active exploitation details in public issues.
+## Reporting a security vulnerability
+
+If you discover a potential security vulnerability in Pet Bathroom Tracker, please report it privately using GitHub's security reporting feature:
+
+**[Report a vulnerability privately](https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-assistant/security/advisories)**
+
+Open the repository's Security Advisories page and select **Report a vulnerability**.
+
+Please include the affected version, a description of the vulnerability, and steps to reproduce it when possible.
+
+Do not disclose vulnerabilities through public GitHub issues. Do not include passwords, authentication tokens, database files, backup archives, or other sensitive household information in your report.
+
+Reports will be reviewed before any public disclosure. This is an experimental project maintained on a best-effort basis; no fixed response or resolution timeframe is guaranteed.
