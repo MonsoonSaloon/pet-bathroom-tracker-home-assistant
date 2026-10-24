@@ -129,6 +129,18 @@ python3 -m unittest discover -s tests -v
 
 The [Source checks workflow](.github/workflows/checks.yml) runs database tests, Python syntax checks, shell syntax checks and a JavaScript syntax check for pushes and pull requests. The repository also runs automated AMD64 and ARM64 container architecture tests. These checks cannot substitute for a full Home Assistant OS installation test on each architecture.
 
+## ❤️ Support the Project
+
+Pet Bathroom Tracker is completely free and open source, and I intend to keep it that way.
+
+If you find the app useful and would like to support its continued development, you can leave a one-time donation through Ko-fi.
+
+**[☕ Support Pet Bathroom Tracker on Ko-fi](https://ko-fi.com/monsoonsaloon)**
+
+Donations start at just $1 and are entirely optional. Every contribution is appreciated and helps support this project and future open-source development.
+
+Thank you for your support!
+
 ## License
 
 [MIT](LICENSE)
