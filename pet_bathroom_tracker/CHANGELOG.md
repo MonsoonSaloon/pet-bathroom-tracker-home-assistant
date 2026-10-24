@@ -11,12 +11,22 @@
 - Add Flask API regression tests for Ingress restrictions, malformed JSON, size limits, pet/entry lifecycle, archived records, and invalid IDs.
 - Add JavaScript regressions for daylight-saving-time timestamps and HTML escaping.
 - Install application dependencies in the source-check workflow and remove the hard-coded manifest version assertion in release tests.
+- All nine GitHub automated checks passed on the `security-v056` pull request, including CodeQL scanning and native AMD64/ARM64 container build and test jobs. CodeQL reported no new alerts in the changes covered by the pull request.
+
+### Home Assistant OS validation (October 24, 2026)
+- Installed the v0.5.6 development branch as a separate app on an isolated AMD64 Home Assistant OS VM (VM 103); verified startup, Ingress, pet management, entry editing, date navigation, and historical data.
+- Confirmed fresh-install pet-management and persistence regressions, including pet rename, icon changes, archive/restore, and history preservation after restart.
+- Tested database compatibility on a disposable copy of an existing v0.5.5 SQLite database; repeated initialization preserved both pets, all four bathroom entries, timestamps, and notes, with passing integrity and foreign-key checks.
+- Rehearsed an actual in-place v0.5.5 → v0.5.6 update using a separate `upgrade-rehearsal-v056` branch and Home Assistant's normal Update button, without uninstalling the app.
+- Before and after the in-place update, compared the complete `dogs` and `bathroom_entries` table records: both pets and all four entries matched exactly, including IDs, icons, activity flags, timestamps, and notes.
+- Confirmed the upgraded app restarted successfully, retained the October 23–24 test history, served the dashboard through Ingress, and returned successful Supervisor health checks. Reviewed application logs contained no observed exceptions or failed HTTP requests.
+- Preserved verified pre-upgrade SQLite backups and a Home Assistant backup before the rehearsal.
 
 ### Upgrade notes
-- This version is a test candidate until the branch checks and isolated Home Assistant OS testing finish.
-- No database schema change or data migration is required.
-- Back up the existing Home Assistant app before updating; do not uninstall it to upgrade.
-- The project remains an experimental preview, without independent external security review or full ARM64 Home Assistant OS runtime verification.
+- No database schema change or data migration is required for this release.
+- Back up the existing Home Assistant app before updating; update in place and do not uninstall to upgrade.
+- The public release is pending final documentation and merge into `main`; v0.5.5 remains the published version until then.
+- The project remains an experimental preview. Full ARM64 Home Assistant OS installation/runtime verification, independent security review, and broader external testing are still outstanding.
 
 ## 0.5.5 — Security maintenance
 
