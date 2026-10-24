@@ -13,7 +13,7 @@ A private-to-your-home **shared pet bathroom log** for Home Assistant OS. Track 
 5. **Start** the app and select **Open Web UI**. Select **Add your first pet**.
 6. Enable **Show in sidebar** for convenient access by your household, including non-admin Home Assistant accounts.
 
-**Already installed?** Use Home Assistant's **Update** button to upgrade in place. Make a manual Home Assistant backup containing this app before updating. **Do not uninstall** if you want to keep your saved trips.
+**Already installed?** Use Home Assistant's **Update** button to upgrade in place. Make a manual Home Assistant backup containing this app before updating and keep its encryption recovery key securely stored. **Do not uninstall** if you want to keep your saved trips. An isolated AMD64 Home Assistant OS test confirmed that an in-place v0.5.5 → v0.5.6 update preserved both test pets, four bathroom entries, icons, timestamps, and notes.
 
 ## Features
 
@@ -24,6 +24,15 @@ A private-to-your-home **shared pet bathroom log** for Home Assistant OS. Track 
 - Archive and restore pets without deleting trip history
 - Local SQLite records backed up through Home Assistant (`backup: cold`)
 - Shared across authenticated Home Assistant users with access to the app; **no separate pet-tracker account**
+
+## v0.5.6 fixes and verification
+
+- **Stricter input validation:** Reject invalid, fractional, boolean, and oversized pet IDs; reject invalid pet/entry IDs in route paths with controlled error responses.
+- **Daylight-saving-time display correction:** Show saved local bathroom timestamps without unintended browser time normalization.
+- **Regression coverage:** Add Flask API input-validation and security tests, plus JavaScript tests for timestamp formatting and HTML escaping.
+- **No database migration required:** v0.5.6 does not change the SQLite schema.
+
+**Validation completed October 24, 2026:** GitHub pull requests passed source checks, CodeQL scanning, and native AMD64/ARM64 container tests. On an isolated **AMD64 Home Assistant OS VM 103**, the v0.5.6 branch installed, launched through Ingress, and passed functional, restart, and log checks. A separate rehearsal branch was upgraded **in place** from v0.5.5 to v0.5.6 using Home Assistant's **Update** button. Both test pets, four entries across two dates, and saved notes remained visible. Exact before-and-after SQLite record comparisons and database integrity checks passed. This does **not** establish full ARM64 Home Assistant OS compatibility or constitute an independent security audit.
 
 ## Important notes
 
@@ -40,4 +49,4 @@ A private-to-your-home **shared pet bathroom log** for Home Assistant OS. Track 
 - **Release notes:** https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-assistant/blob/main/CHANGELOG.md
 - **Report an issue:** https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-assistant/issues
 
-**Planned v0.5.6 fixes:** stricter pet-ID validation, corrected daylight-saving-time display for saved wall-clock trips, and new automated API/dashboard regression tests. No database migration is required. This candidate must pass GitHub Actions and isolated Home Assistant testing before release.
+**Release status:** The v0.5.6 release candidate has completed its automated and isolated AMD64 Home Assistant OS validation, including an in-place upgrade rehearsal. Public publication is still pending; the app remains an experimental preview. Full Home Assistant OS ARM64 testing and independent external security review are still outstanding.
