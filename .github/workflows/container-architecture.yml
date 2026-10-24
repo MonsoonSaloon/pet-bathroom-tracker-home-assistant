@@ -86,7 +86,7 @@ jobs:
 
               trip = client.post('/api/entries', json={
                   'dog_id': pet_id,
-                  'timestamp': '2026-10-23T19:29:00',
+                  'timestamp': '2026-10-23T19:29',
                   'pee': True,
                   'poop': True,
                   'notes': 'Architecture smoke test'
