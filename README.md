@@ -8,7 +8,7 @@
 
 [![Add Pet Bathroom Tracker repository to your Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FMonsoonSaloon%2Fpet-bathroom-tracker-home-assistant)
 
-> **Experimental preview.** v0.5.5 has been tested on AMD64 Home Assistant OS: public-repository installation, first-pet onboarding, shared non-admin access, trip persistence across restarts, v0.5.4 → v0.5.5 in-place upgrade, backup recovery, pet management, and Watchdog crash recovery. Native AMD64 and ARM64 container builds and functional checks passed in GitHub Actions. Full Home Assistant OS installation on ARM64 and an independent security audit remain unverified. v0.5.6 is being tested on a separate branch.
+> **Experimental preview.** v0.5.5 is the currently published version. The v0.5.6 release candidate has passed automated source checks, CodeQL analysis with no new findings reported on its pull request, and native AMD64/ARM64 container tests. Fresh installation, Home Assistant Ingress, restart persistence, pet management, and an in-place v0.5.5 → v0.5.6 upgrade were tested successfully on an isolated AMD64 Home Assistant OS VM. An exact SQLite comparison confirmed preservation of both test pets and all four bathroom entries, including their timestamps, icons, and notes. Full ARM64 Home Assistant OS testing and an independent security review remain outstanding. v0.5.6 has not been publicly released.
 
 ## ❤️ Support the Project
 
@@ -62,7 +62,7 @@ No Proxmox, Samba, extra Linux server, or port forwarding is needed for users ru
 3. **Update in place**; do not uninstall, as that can remove persistent app data.
 4. Verify saved pets and entries remain after the update. The update may require the app container to restart; it should not require restarting Home Assistant Core.
 
-**Verified update tests:** On AMD64 Home Assistant OS, v0.5.3 → v0.5.4 and v0.5.4 → v0.5.5 preserved existing pets and bathroom history. The v0.5.6 candidate upgrade is not yet verified.
+**Verified update tests:** On AMD64 Home Assistant OS, v0.5.3 → v0.5.4 and v0.5.4 → v0.5.5 upgrades preserved existing pets and bathroom history. On October 24, 2026, an isolated v0.5.5 → v0.5.6 in-place upgrade was also completed using Home Assistant's normal **Update** button. Two test pets, four bathroom entries across two days, pet icons, timestamps, and notes were preserved. Exact before-and-after SQLite comparisons passed, and the updated app restarted successfully with no errors observed in the reviewed logs. This was a controlled AMD64 test, not a guarantee for every installation.
 
 Older **Local app** installations have a different Supervisor app identity: adding the public GitHub repository does **not** automatically transfer their data. Back up first and plan a separate migration.
 
@@ -82,7 +82,7 @@ All tracking data stays on your Home Assistant system unless you back it up to o
 
 | Item | Status |
 |---|---|
-| Home Assistant OS / AMD64 | Tested (installation, use, in-place update, backup restore, fresh-install update-entity discovery) |
+| Home Assistant OS / AMD64 | Tested (installation, Ingress, pet management, backup restore, earlier updates, and isolated v0.5.5 → v0.5.6 in-place upgrade) |
 | Home Assistant OS / ARM64 | Automated container tests passed; **full Home Assistant OS installation not yet tested** |
 | Home Assistant Container / Core | App store installation method not supported |
 | GitHub-hosted installation | Tested |
@@ -135,7 +135,7 @@ python3 -m pip install pyyaml
 python3 -m unittest discover -s tests -v
 ```
 
-The [Source checks workflow](.github/workflows/checks.yml) runs database tests, Python syntax checks, shell syntax checks and a JavaScript syntax check for pushes and pull requests. The repository also runs automated AMD64 and ARM64 container architecture tests. These checks cannot substitute for a full Home Assistant OS installation test on each architecture.
+The [Source checks workflow](.github/workflows/checks.yml) runs Python database, recovery, and Flask API regression tests; dashboard JavaScript regression tests; and Python, shell, and JavaScript syntax checks for pushes and pull requests. Additional GitHub Actions workflows run CodeQL analysis and native AMD64 and ARM64 container architecture tests. All nine checks passed on the v0.5.6 development pull request and on the isolated upgrade-rehearsal pull request. Automated checks complement—but do not replace—full Home Assistant OS installation testing on each architecture.
 
 ## License
 
