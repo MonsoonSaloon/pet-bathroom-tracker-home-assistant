@@ -26,6 +26,38 @@
 - [ ] Public GitHub-install version: non-admin account tested
 - [ ] Watchdog fault recovery tested intentionally in an isolated instance
 
+## v0.5.5 — Security maintenance release verification (October 24, 2026)
+
+### Security
+- [x] Resolved six CodeQL information-exposure findings in Python exception handling
+- [x] Resolved one GitHub Actions workflow permissions finding
+- [x] CodeQL confirmed zero remaining open findings after the fixes
+- [x] Dependabot reported zero open vulnerability alerts
+- [x] Secret scanning reported zero open alerts
+- [x] Secret protection and push protection enabled
+
+### Automated testing
+- [x] GitHub Actions Source checks #18 passed
+- [x] GitHub Actions Container architecture tests #8 passed
+- [x] GitHub Actions CodeQL #3 passed
+- [x] App configuration, dashboard, documentation, and recovery test updated to v0.5.5
+- [x] Windows tests investigated; remaining failures involve temporary SQLite database file locks (WinError 32)
+
+### Home Assistant OS upgrade testing (AMD64)
+- [x] Created Proxmox VM 103 snapshot: before-pet-tracker-v055
+- [x] v0.5.5 detected and installed through Home Assistant's normal app update process
+- [x] Existing test pet and bathroom history preserved during v0.5.4 → v0.5.5 upgrade
+- [x] Adding, editing, and deleting bathroom entries tested successfully
+- [x] Dashboard displays Preview 0.5.5
+- [x] Application restarted successfully and existing records remained intact
+
+### Publication
+- [x] v0.5.5 committed and pushed to GitHub
+- [x] GitHub v0.5.5 release published
+- [x] Release remains designated as an experimental preview
+- [ ] Independent ARM64 Home Assistant OS runtime testing
+- [ ] Independent external security review
+
 ## Remaining stability/publication work
 
 - [ ] ARM64 install/build/runtime test

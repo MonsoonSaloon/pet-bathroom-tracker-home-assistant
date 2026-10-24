@@ -24,7 +24,11 @@ A full restore test needs an *isolated* throwaway Home Assistant OS VM or spare 
 5. Open the restored tracker and compare pets, icons, archive status, and several recent trips against a written baseline taken before backing up. Add and edit a test trip **on the disposable instance only**.
 6. Destroy or shut down the test instance once verified. Do not attach its data volume to the production app.
 
-**Status:** These steps are documented but have *not yet been completed* on a separate Home Assistant OS installation.
+**Status — Verified October 23, 2026:** An encrypted Pet Bathroom Tracker app backup was successfully restored to a separate AMD64 Home Assistant OS installation (VM 103). The restored installation retained the test pet, emoji icon, and bathroom history. Subsequent edits persisted after an application restart.
+
+**Additional verification — October 24, 2026:** The restored test environment successfully completed an in-place upgrade from v0.5.4 to v0.5.5. Existing records survived the update and subsequent restart, and adding, editing, and deleting entries worked correctly.
+
+These tests validate the documented recovery and upgrade procedures in the tested AMD64 environment. They do not guarantee successful recovery from every hardware failure, filesystem issue, or unsupported architecture.
 
 ## Offline SQLite backup/restore rehearsal (developers)
 

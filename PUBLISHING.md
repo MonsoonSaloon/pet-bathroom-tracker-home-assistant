@@ -15,13 +15,33 @@ The repository root contains `repository.yaml` and the app directory `pet_bathro
 
 ## Still required before a stable release
 
-1. Build and test on real `aarch64` Home Assistant OS hardware (not just manifest syntax).
-2. Review Python dependency vulnerability advisories and update pins as needed.
-3. Consider pre-built, signed multi-platform container images to avoid on-device builds.
-4. Capture **sanitized** example screenshots without private information.
-5. Test in-place upgrade **v0.5.1 → v0.5.2** on an existing GitHub-installed app; verify data and view the changelog.
-6. Repeat access, edit/delete, error-path, and watchdog checks in the publicly installed app.
-7. Keep `stage: experimental` until the remaining checks and security review are complete.
+Pet Bathroom Tracker v0.5.5 was published on October 24, 2026, as an experimental preview.
+
+### Completed verification
+- [x] Public GitHub repository installation tested on AMD64 Home Assistant OS.
+- [x] First-run pet creation and bathroom entry tested.
+- [x] Encrypted Home Assistant app backup restored successfully to a separate Home Assistant OS VM.
+- [x] Existing pets, icons, and bathroom history recovered successfully.
+- [x] In-place upgrade from v0.5.4 to v0.5.5 tested on AMD64 Home Assistant OS.
+- [x] Existing data preserved through the v0.5.5 update and subsequent restart.
+- [x] Adding, editing, and deleting bathroom entries verified after updating.
+- [x] GitHub Actions source checks and AMD64/ARM64 container tests passed.
+- [x] All seven previously reported CodeQL findings resolved.
+- [x] GitHub v0.5.5 release published.
+
+### Outstanding before stable v1.0
+- [ ] Test installation and runtime on physical ARM64/Raspberry Pi Home Assistant OS hardware.
+- [ ] Complete a broader independent security review.
+- [ ] Establish an ongoing dependency update and vulnerability review process.
+- [ ] Recheck the complete pet-management workflow on the public release.
+- [ ] Reverify non-admin household access on the current public release.
+- [ ] Test intentional Watchdog fault recovery in an isolated installation.
+
+Optional future improvements:
+- Publish pre-built AMD64/ARM64 container images.
+- Expand automated testing to cover additional operating environments.
+
+Keep the release designated as experimental until the outstanding checks have been evaluated.
 
 ## Making changes
 
