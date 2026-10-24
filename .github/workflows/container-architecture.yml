@@ -95,10 +95,27 @@ jobs:
               print('Health, pet creation, and trip creation passed')
           PY
 
+      - name: Verify secure permissions on fresh installation
+        run: |
+          set -euo pipefail
+          docker exec pet-tracker-ci sh -c '
+            test "$(stat -c %a /data)" = 700
+            test "$(stat -c %a /data/tracker.db)" = 600
+            test "$(stat -c %U /data/tracker.db)" = dogtracker
+          '
+
       - name: Restart container and verify stored data
         run: |
           set -euo pipefail
+          # Simulate a restored/older database with permissive file modes.
+          docker exec pet-tracker-ci chmod 644 /data/tracker.db
+          docker exec pet-tracker-ci chmod 755 /data
           docker restart pet-tracker-ci
+          docker exec pet-tracker-ci sh -c '
+            test "$(stat -c %a /data)" = 700
+            test "$(stat -c %a /data/tracker.db)" = 600
+            test "$(stat -c %U /data/tracker.db)" = dogtracker
+          '
           docker exec -i --workdir /app \
             --env DOG_TRACKER_DATABASE=/data/tracker.db \
             --env DOG_TRACKER_TIMEZONE=America/New_York \
