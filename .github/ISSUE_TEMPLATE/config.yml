@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "Installation and usage documentation"
+    url: "https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-assistant#readme"
+    about: "Review setup, update, and backup instructions before reporting an issue."
+  - name: "Security reporting instructions"
+    url: "https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-assistant/blob/main/SECURITY.md"
+    about: "For possible security vulnerabilities, read the security policy instead of filing a public issue."

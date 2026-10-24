@@ -1,0 +1,60 @@
+name: "Feature request"
+description: "Suggest a useful improvement to Pet Bathroom Tracker."
+title: "[Feature] "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement! Pet Bathroom Tracker is an experimental Home Assistant app for shared pet bathroom history. Please describe the problem the change would solve.
+  - type: dropdown
+    id: category
+    attributes:
+      label: What area would this improve?
+      options:
+        - Pet management
+        - Recording trips
+        - Timeline and history
+        - Mobile usability
+        - Home Assistant integration
+        - Notifications or automations
+        - Backups or import/export
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+      description: "Explain the use case rather than only describing a button or setting."
+      placeholder: "When I ... it is difficult to ..."
+    validations:
+      required: true
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: How would you like it to work?
+      placeholder: "It would be helpful if the tracker could ..."
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives or workarounds (optional)
+    validations:
+      required: false
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional details or mockups (optional)
+      description: "Attach screenshots or drawings if helpful. Avoid sharing personal information."
+    validations:
+      required: false
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues for a similar feature request.
+          required: true
