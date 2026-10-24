@@ -1,0 +1,125 @@
+name: Container architecture tests
+
+on:
+  push:
+    paths:
+      - 'pet_bathroom_tracker/**'
+      - '.github/workflows/container-architecture.yml'
+  pull_request:
+    paths:
+      - 'pet_bathroom_tracker/**'
+      - '.github/workflows/container-architecture.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-smoke-test:
+    name: Build and test ${{ matrix.arch }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-24.04
+            docker_arch: amd64
+          - arch: aarch64
+            runner: ubuntu-24.04-arm
+            docker_arch: arm64
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build native container image
+        run: |
+          set -euo pipefail
+          docker build --pull -t pet-bathroom-tracker:ci ./pet_bathroom_tracker
+          actual=$(docker image inspect pet-bathroom-tracker:ci --format '{{.Architecture}}')
+          echo "Built architecture: $actual"
+          test "$actual" = '${{ matrix.docker_arch }}'
+
+      - name: Start tracker and check HTTP boundary
+        run: |
+          set -euo pipefail
+          docker volume create pet-tracker-ci-data >/dev/null
+          docker run -d --name pet-tracker-ci \
+            --mount source=pet-tracker-ci-data,target=/data \
+            --publish 127.0.0.1:18099:8099 \
+            pet-bathroom-tracker:ci
+          # The HTTP service should answer, but refuse traffic that did not
+          # arrive through Home Assistant Ingress (remote IP 172.30.32.2).
+          response=000
+          for attempt in $(seq 1 45); do
+            response=$(curl --max-time 2 -s -o /dev/null -w '%{http_code}' \
+              http://127.0.0.1:18099/health || true)
+            if [ "$response" = '403' ]; then
+              break
+            fi
+            sleep 2
+          done
+          if [ "$response" != '403' ]; then
+            docker logs pet-tracker-ci
+            echo "Expected Ingress security refusal (HTTP 403), received $response" >&2
+            exit 1
+          fi
+
+      - name: Test database and pet entry within trusted request context
+        run: |
+          set -euo pipefail
+          docker exec -i --workdir /app \
+            --env DOG_TRACKER_DATABASE=/data/tracker.db \
+            --env DOG_TRACKER_TIMEZONE=America/New_York \
+            pet-tracker-ci python - <<'PY'
+          from app import app
+
+          trusted = {'environ_overrides': {'REMOTE_ADDR': '172.30.32.2'}}
+          with app.test_client() as client:
+              health = client.get('/health', **trusted)
+              assert health.status_code == 200, health.get_data(as_text=True)
+
+              pet = client.post('/api/dogs', json={'name': 'CI Pet', 'icon': '🐶'}, **trusted)
+              assert pet.status_code == 201, pet.get_data(as_text=True)
+              pet_id = pet.get_json()['id']
+
+              trip = client.post('/api/entries', json={
+                  'dog_id': pet_id,
+                  'timestamp': '2026-10-23T19:29:00',
+                  'pee': True,
+                  'poop': True,
+                  'notes': 'Architecture smoke test'
+              }, **trusted)
+              assert trip.status_code == 201, trip.get_data(as_text=True)
+              print('Health, pet creation, and trip creation passed')
+          PY
+
+      - name: Restart container and verify stored data
+        run: |
+          set -euo pipefail
+          docker restart pet-tracker-ci
+          docker exec -i --workdir /app \
+            --env DOG_TRACKER_DATABASE=/data/tracker.db \
+            --env DOG_TRACKER_TIMEZONE=America/New_York \
+            pet-tracker-ci python - <<'PY'
+          from app import app
+
+          trusted = {'environ_overrides': {'REMOTE_ADDR': '172.30.32.2'}}
+          with app.test_client() as client:
+              health = client.get('/health', **trusted)
+              assert health.status_code == 200, health.get_data(as_text=True)
+              pets = client.get('/api/dogs', **trusted)
+              assert pets.status_code == 200
+              assert any(p['name'] == 'CI Pet' for p in pets.get_json())
+              trips = client.get('/api/entries?date=2026-10-23', **trusted)
+              assert trips.status_code == 200
+              assert any(e['pee'] and e['poop'] and
+                         e['notes'] == 'Architecture smoke test'
+                         for e in trips.get_json())
+              print('Data survived container restart')
+          PY
+
+      - name: Show logs on failure
+        if: failure()
+        run: docker logs pet-tracker-ci || true
