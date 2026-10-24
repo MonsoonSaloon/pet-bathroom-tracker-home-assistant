@@ -8,7 +8,7 @@
 - [x] Dashboard version label matches manifest version
 - [x] GitHub Actions **Source checks** passed after first publication of v0.5.1
 - [x] GitHub Actions passed after v0.5.2 update
-- [ ] GitHub Actions passes after v0.5.3 branding update
+- [x] GitHub Actions passes after v0.5.3 branding update (verified by subsequent successful builds)
 
 ## Real-world Home Assistant OS (AMD64)
 
@@ -22,9 +22,10 @@
 - [x] Watchdog enabled on the earlier preview without immediate reported issues
 - [x] In-place v0.5.1 → v0.5.2 upgrade tested with existing records via Home Assistant CLI; Test pet 1 and 7:29 PM combined trip preserved
 - [x] v0.5.2 → v0.5.3 GUI update tested without CLI or Core restart; installed version, logo and saved Test pet 1 / trip verified
-- [ ] Public GitHub-install version: full add/edit/delete/rename/archive workflow rechecked
-- [ ] Public GitHub-install version: non-admin account tested
-- [ ] Watchdog fault recovery tested intentionally in an isolated instance
+- [x] Public GitHub-install version: pet creation, renaming, archiving, and restoring tested; bathroom history preserved
+- [x] Public GitHub-install version: bathroom entries can be added, edited, and deleted
+- [x] Public GitHub-install version: non-admin account tested successfully on VM 103 with v0.5.5; sidebar access, shared pet records, entry creation, and administrator visibility verified
+- [x] Watchdog fault recovery tested on isolated Home Assistant OS VM 103 (v0.5.5); Supervisor confirmed automatic restart after container exit code 137, with dashboard functionality and saved pet history preserved
 
 ## v0.5.5 — Security maintenance release verification (October 24, 2026)
 
