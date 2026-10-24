@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.5.4 — Dependency and storage-permissions maintenance
+
+### Security hardening
+- Updated pinned Python dependencies to Flask `3.1.3` and Gunicorn `26.2.0`.
+- On startup, apply restrictive permissions to persistent SQLite storage (`/data` mode `700`; `tracker.db` and related SQLite files mode `600`) and ensure SQLite file ownership belongs to the unprivileged `dogtracker` account.
+- Keep Home Assistant Supervisor's private `options.json` under Supervisor control.
+
+### Testing
+- GitHub Actions source checks and native AMD64/ARM64 container tests passed after the dependency updates and permissions fix.
+- Automated container tests now verify database file permissions during fresh installation and after a restart with previously permissive file modes.
+- Full Home Assistant OS installation on ARM64 and a clean-install update-entity test without a Home Assistant Core restart remain to be completed.
+
+### Upgrade notes
+- **No API, database schema, pet history, or tracking-behavior changes.** An in-place update is expected to preserve existing entries; verify this on the test installation before considering the release validated.
+- Create a Home Assistant backup before updating. **Do not uninstall** the app to update it.
+- This remains an experimental preview, not an independently audited stable release.
+
 ## 0.5.3 — App icon and public branding
 
 ### Added

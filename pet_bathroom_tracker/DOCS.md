@@ -12,7 +12,7 @@ This is a free community **Home Assistant OS app**. It uses Home Assistant Ingre
 6. Turn on **Show in sidebar** to give all permitted Home Assistant users convenient access. A non-admin user can open the sidebar app but cannot administer its installation.
 7. After confirming it works, turn on **Start on boot**; optionally enable **Watchdog** for availability monitoring.
 
-This is an **app**, not a HACS integration. The GitHub version will build a container on Home Assistant during installation; a ready-made multi-architecture image is not yet provided. ARM64 has not yet been runtime-tested.
+This is an **app**, not a HACS integration. The GitHub version will build a container on Home Assistant during installation; a ready-made multi-architecture image is not yet provided. Native AMD64 and ARM64 container builds and smoke tests have passed in GitHub Actions, but a full Home Assistant OS installation on ARM64 has not yet been tested.
 
 ## Record and review bathroom trips
 
@@ -36,7 +36,7 @@ Local-app previews installed from `/local_apps` have a different Home Assistant 
 
 ## Backups and recovery
 
-The app stores records in private SQLite storage at `/data/tracker.db`. The configuration declares `backup: cold`, which stops the app briefly during a Home Assistant app-data backup to reduce SQLite write-consistency risk.
+The app stores records in private SQLite storage at `/data/tracker.db`. Starting with v0.5.4, startup automatically restricts `/data` to mode `700` and SQLite files to mode `600`, including restored databases. The configuration declares `backup: cold`, which stops the app briefly during a Home Assistant app-data backup to reduce SQLite write-consistency risk.
 
 The project successfully restored an encrypted app backup to a separate Home Assistant OS VM on October 23, 2026 and confirmed edits survived restart. This does not guarantee every hardware version or backup environment will behave identically.
 

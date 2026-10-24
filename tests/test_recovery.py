@@ -25,7 +25,7 @@ def init_database(db):
 class ReleaseTests(unittest.TestCase):
     def test_manifest_contains_recovery_and_ingress_safeguards(self):
         config = yaml.safe_load((APP/'config.yaml').read_text())
-        self.assertEqual(config['version'], '0.5.3')
+        self.assertEqual(config['version'], '0.5.4')
         self.assertEqual(config['backup'], 'cold')
         self.assertTrue(config['ingress'])
         self.assertFalse(config['panel_admin'])

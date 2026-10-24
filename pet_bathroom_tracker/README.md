@@ -2,7 +2,7 @@
 
 A private-to-your-home **shared pet bathroom log** for Home Assistant OS. Track pee, poop, or both, review an hourly timeline, and keep persistent history for multiple pets.
 
-**Preview version: 0.5.3** · **Status: Experimental** · **Runs inside Home Assistant using Ingress**
+**Preview version: 0.5.4** · **Status: Experimental** · **Runs inside Home Assistant using Ingress**
 
 ## Get started
 
@@ -28,7 +28,7 @@ A private-to-your-home **shared pet bathroom log** for Home Assistant OS. Track 
 ## Important notes
 
 - This is an **experimental community app**, not an official Home Assistant integration or HACS plugin.
-- Home Assistant OS is required for this app installation method. AMD64 has been tested; ARM64 remains unverified.
+- Home Assistant OS is required for this app installation method. AMD64 has been tested; AMD64 and ARM64 containers passed native automated tests; a full Home Assistant OS installation on ARM64 remains unverified.
 - Pet data is shared: anyone with access to this app can view and edit all pets and trips. There are no per-user permissions.
 - The app does not require any router port forwarding, separate cloud service, or access token.
 - Upgrades should preserve data, but make backups and retain your Home Assistant backup encryption recovery key securely.
@@ -40,4 +40,4 @@ A private-to-your-home **shared pet bathroom log** for Home Assistant OS. Track 
 - **Release notes:** https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-assistant/blob/main/CHANGELOG.md
 - **Report an issue:** https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-assistant/issues
 
-**Changes in v0.5.3:** added the new dog-and-cat app icon, details-page logo, GitHub banner, and branded assets. Updated release documentation and dashboard version label. Tracking behavior and database schema are unchanged.
+**Changes in v0.5.4:** updated Flask and Gunicorn dependencies and enforced restrictive SQLite storage permissions at app startup. Added automated checks for database permissions and container operation on AMD64 and ARM64. Tracking behavior and database schema are unchanged.
