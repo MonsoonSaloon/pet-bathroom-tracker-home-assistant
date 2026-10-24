@@ -4,11 +4,13 @@
 
 ![Developer preview](https://img.shields.io/badge/status-experimental-orange) ![Home Assistant OS](https://img.shields.io/badge/platform-Home%20Assistant%20OS-blue)
 
-**Preview v0.5.6 (release candidate; not published yet)** — a free, local-first bathroom tracker for multiple pets, shared inside Home Assistant. Record pee, poop, or both; review a color-coded timeline; and edit history from your phone, tablet, or computer.
+**Preview v0.5.6 (published experimental pre-release)** — a free, local-first bathroom tracker for multiple pets, shared inside Home Assistant. Record pee, poop, or both; review a color-coded timeline; and edit history from your phone, tablet, or computer.
 
 [![Add Pet Bathroom Tracker repository to your Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FMonsoonSaloon%2Fpet-bathroom-tracker-home-assistant)
 
-> **Experimental preview.** v0.5.5 is the currently published version. The v0.5.6 release candidate has passed automated source checks, CodeQL analysis with no new findings reported on its pull request, and native AMD64/ARM64 container tests. Fresh installation, Home Assistant Ingress, restart persistence, pet management, and an in-place v0.5.5 → v0.5.6 upgrade were tested successfully on an isolated AMD64 Home Assistant OS VM. An exact SQLite comparison confirmed preservation of both test pets and all four bathroom entries, including their timestamps, icons, and notes. Full ARM64 Home Assistant OS testing and an independent security review remain outstanding. v0.5.6 has not been publicly released.
+**Latest published release:** [v0.5.6 — Security and Dashboard Maintenance](https://github.com/MonsoonSaloon/pet-bathroom-tracker-home-assistant/releases/tag/v0.5.6) (experimental pre-release).
+
+> **Experimental preview.** v0.5.6 was published as a GitHub pre-release on October 24, 2026. It passed automated source checks, CodeQL analysis with no new findings reported on the release pull request, and native AMD64/ARM64 container tests. Fresh installation, Home Assistant Ingress, restart persistence, pet management, and an in-place v0.5.5 → v0.5.6 upgrade were tested successfully on an isolated AMD64 Home Assistant OS VM. An exact SQLite comparison confirmed preservation of both test pets and all four bathroom entries, including their timestamps, icons, and notes. Full ARM64 Home Assistant OS installation testing and an independent security review remain outstanding; this is not a stable v1.0 release.
 
 ## ❤️ Support the Project
 
@@ -29,7 +31,7 @@ Pet Bathroom Tracker is free and open source, and I intend to keep it that way. 
 
 ## Screenshots
 
-These are **real screenshots from earlier preview test builds**, cropped to show only the app. They use demonstration pet names; the same tracking and management features are available in the v0.5.5 public preview and this v0.5.6 candidate.
+These are **real screenshots from earlier preview test builds**, cropped to show only the app. They use demonstration pet names; the same tracking and management features are available in the published v0.5.6 experimental preview.
 
 ### Desktop — multi-pet tracker and color-coded timeline
 
